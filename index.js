@@ -32,28 +32,20 @@ class CountdownTimer {
     this.idInterval = null;
     this.startTimer = this.start.bind(this);
   }
-
   start() {
-    console.log(this);
     this.idInterval = setInterval(() => {
       this.updateTimer(this.getRefs());
     }, 1000);
   }
-
   getRefs() {
     const container = document.querySelector(this.selector);
-    const btnRef = container.querySelector(".btn");
     const daysRef = container.querySelector('[data-value="days"]');
     const hoursRef = container.querySelector('[data-value="hours"]');
     const minsRef = container.querySelector('[data-value="mins"]');
     const secsRef = container.querySelector('[data-value="secs"]');
-
-    return { container, btnRef, daysRef, hoursRef, minsRef, secsRef };
+    return { container, daysRef, hoursRef, minsRef, secsRef };
   }
-
-  updateTimer({ container, btnRef, daysRef, hoursRef, minsRef, secsRef }) {
-    btnRef.addEventListener("click", this.startTimer);
-
+  updateTimer({ container, daysRef, hoursRef, minsRef, secsRef }) {
     const time = this.targetDate - Date.now();
     if (time < 0) {
       clearInterval(this.idInterval);
@@ -79,7 +71,11 @@ class CountdownTimer {
 
 const timer = new CountdownTimer({
   selector: "#timer-1",
-  targetDate: new Date("Aug 29, 2021"),
+  targetDate: new Date("Aug 30, 2021 19:54:30"),
 });
-
-timer.updateTimer(timer.getRefs);
+const timer2 = new CountdownTimer({
+  selector: "#timer-2",
+  targetDate: new Date("Oct 21, 2021"),
+});
+timer.start();
+timer2.start();
